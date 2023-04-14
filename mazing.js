@@ -1,3 +1,5 @@
+/* Função do Timer */
+
 const miliseg = document.querySelector('.milissegundos')
 const seg = document.querySelector('.segundos')
 const min = document.querySelector('.minutos')
@@ -44,28 +46,6 @@ function minutos() {
   }
 }
 
-function iniciar() {
-  clearInterval(INTERVALO)
-  INTERVALO = setInterval(() => {
-    milissegundos()
-  }, 10)
-}
-
-function parar() {
-  clearInterval(INTERVALO)
-}
-
-function resetar() {
-  clearInterval(INTERVALO)
-  miliNum = 0
-  segNum = 0
-  minNum = 0
-  miliseg.innerHTML = '00'
-  seg.innerHTML = '00'
-  min.innerHTML = '00'
-}
-
-
 var Position = function(x, y) {
     this.x = x;
     this.y = y;
@@ -76,11 +56,6 @@ var Position = function(x, y) {
   };
   
   var Mazing = function(id) {
-  
-    // Original JavaScript code by Chirp Internet: www.chirpinternet.eu
-    // Please acknowledge use of this code by including this header.
-  
-    /* bind to HTML element */
   
     this.mazeContainer = document.getElementById(id);
   
@@ -104,7 +79,7 @@ var Position = function(x, y) {
         var el =  this.mazeContainer.children[i].children[j];
         this.maze[new Position(i, j)] = el;
         if(el.classList.contains("entrance")) {
-          /* place hero on entrance square */
+          /* posicionar o herói na entrada */
           this.heroPos = new Position(i, j);
           this.maze[this.heroPos].classList.add("hero");
         }
@@ -119,6 +94,13 @@ var Position = function(x, y) {
     mazeOutputDiv.appendChild(this.mazeMessage);
     
     clearInterval(INTERVALO);
+    miliNum = 0;
+    segNum = 0;
+    minNum = 0;
+    miliseg.innerHTML = '00';
+    seg.innerHTML = '00';
+    min.innerHTML = '00';
+
     INTERVALO = setInterval(() => {
       milissegundos()
     }, 10);
@@ -128,7 +110,7 @@ var Position = function(x, y) {
   
     this.mazeContainer.insertAdjacentElement("afterend", mazeOutputDiv);
   
-    /* activate control keys */
+    /* ativando as teclas de controle */
   
     this.keyPressHandler = this.mazeKeyPressHandler.bind(this);
     document.addEventListener("keydown", this.keyPressHandler, false);
@@ -137,16 +119,9 @@ var Position = function(x, y) {
 
   Mazing.prototype.setMessage = function(text) {
   
-    /* display message on screen */
+    /* mensagem na tela */
     this.mazeMessage.innerHTML = text;
     this.mazeScore.innerHTML = this.heroScore;
-  
-    if(this.utter && text.match(/^\w/)) {
-      /* speak message aloud */
-      this.utter.text = text;
-      window.speechSynthesis.cancel();
-      window.speechSynthesis.speak(this.utter);
-    }
   
   };
   
@@ -160,7 +135,7 @@ var Position = function(x, y) {
   };
   
   Mazing.prototype.gameOver = function(text) {
-    /* de-activate control keys */
+    /* desativar as teclas de controle */
     clearInterval(INTERVALO);
     document.removeEventListener("keydown", this.keyPressHandler, false);
     this.setMessage(text);
@@ -168,7 +143,7 @@ var Position = function(x, y) {
   };
 
   Mazing.prototype.endOfGame = function(text) {
-    /* de-activate control keys */
+    /* desativar as teclas de controle */
     document.removeEventListener("keydown", this.keyPressHandler, false);
     this.setMessage(text);
     this.mazeContainer.classList.add("won");
@@ -190,14 +165,14 @@ var Position = function(x, y) {
   
     var nextStep = this.maze[pos].className;
   
-    /* before moving */
+    /* antes de mexer */
   
     if(nextStep.match(/sentinel/)) {
-      /* ran into a moster - lose points */
+      /* bateu com um monstro - perde passos */
       this.heroScore = Math.max(this.heroScore - 5, 0);
   
-      if(!this.childMode && (this.heroScore <= 0)) {
-        /* game over */
+      if(this.heroScore <= 0) {
+        /* perdeu o jogo */
         this.gameOver("Infelizmente, você não conseguiu...");
       } else {
         this.setMessage("Ai, doeu!");
@@ -219,13 +194,13 @@ var Position = function(x, y) {
       }
     }
   
-    /* move hero one step */
+    /* mexer o herói um passo */
   
     this.maze[this.heroPos].classList.remove("hero");
     this.maze[pos].classList.add("hero");
     this.heroPos = pos;
   
-    /* check what was stepped on */
+    /* checar o que o herói encostou */
   
     if(nextStep.match(/key/)) {
       this.heroTakeKey();
@@ -236,12 +211,12 @@ var Position = function(x, y) {
       return;
     }
   
-    if((this.heroScore >= 1) && !this.childMode) {
+    if(this.heroScore >= 1) {
   
       this.heroScore--;
   
       if(this.heroScore <= 0) {
-        /* game over */
+        /* fim de jogo */
         this.gameOver("Infelizmente, você não conseguiu...");
         return;
       }
@@ -282,10 +257,4 @@ var Position = function(x, y) {
     this.tryMoveHero(tryPos);
   
     e.preventDefault();
-  };
-  
-  Mazing.prototype.setChildMode = function() {
-    this.childMode = true;
-    this.heroScore = 0;
-    this.setMessage("collect all the treasure");
   };

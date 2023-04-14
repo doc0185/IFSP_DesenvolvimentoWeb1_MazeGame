@@ -133,7 +133,7 @@ body{
   margin: 0.5em auto;
 }
 #maze_score, #maze_message {
-  font-family: 'Times New Roman', Times, serif;
+  font-family: monospace;
   font-weight: bold;
   font-size: 1em;
 }

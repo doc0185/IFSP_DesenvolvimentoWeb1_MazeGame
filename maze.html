@@ -1,3 +1,13 @@
+<!-- Aluno: Stefano Fogaccia (AQ3010937)-->
+<!-- Código Base: https://www.the-art-of-web.com/javascript/playable-maze-generator/-->
+<!-- 
+    Nosso personagem principal procura enriquecer rapidamente e uma nova proposta de enriquecer de forma fácil lhe impressionou. 
+    Não é fácil, ele precisar entrar em labirinto enorme e precisa não somente encontrar a porta de saída para ele, mas também encontrar uma moeda para que consiga passar por essa porta. 
+    Mas isso não é tudo, ele não pode tomar qualquer caminho, ele possui um número determinado de passos que pode dar, se ele não conseguir com apenas esses passos, a porta se fecha para sempre e ele ficará trancado lá, sem mais poder sair! 
+    Em todo o labirinto, ele encontra caminhos que não levam a lugar algum, além de obstáculos espalhados por todo labirinto, que ele precisará desviar, ou tomara danos severos!
+    Se ele conseguir no entanto, ele abrirá uma porta para um enorme tesouro, algo que ele sempre almejou. O tamanho do tesouro? Depende da dificuldade que ele escolher ao entrar no labirinto!
+-->
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -36,7 +46,7 @@
 
     </div>
     
-    <div id="maze_container"><!-- --></div>
+    <div id="maze_container"></div>
 
 
 
@@ -47,7 +57,7 @@
     const button = document.querySelector('button');
     var Maze, MazeGame;
 
-    const makeMaze = (id, width, height, speech = false) => {
+    const makeMaze = (id, width, height) => {
         Maze = new FancyMazeBuilder(width, height);
         Maze.display(id);
         MazeGame = new Mazing("maze");

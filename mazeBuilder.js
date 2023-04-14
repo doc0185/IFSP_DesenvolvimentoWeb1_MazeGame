@@ -1,8 +1,5 @@
 class MazeBuilder {
-
-  // Original JavaScript code by Chirp Internet: www.chirpinternet.eu
-  // Please acknowledge use of this code by including this header.
-
+  
   constructor(width, height) {
 
     this.width = width;
@@ -13,7 +10,7 @@ class MazeBuilder {
 
     this.maze = this.initArray([]);
 
-    /* place initial walls */
+    /* paredes iniciais */
 
     this.maze.forEach((row, r) => {
       row.forEach((cell, c) => {
@@ -37,20 +34,20 @@ class MazeBuilder {
       });
 
       if(r == 0) {
-        /* place exit in top row */
+        /* posicionando a saída na linha mais superior */
         let doorPos = this.posToSpace(this.rand(1, this.width));
         this.maze[r][doorPos] = ["door", "exit"];
       }
 
       if(r == this.rows - 1) {
-        /* place entrance in bottom row */
+        /* posicionando a entrada na linha mais inferior */
         let doorPos = this.posToSpace(this.rand(1, this.width));
         this.maze[r][doorPos] = ["door", "entrance"];
       }
 
     });
-
-    /* start partitioning */
+    
+    /* iniciando o particionamento */
 
     this.partition(1, this.height - 1, 1, this.width - 1);
 
@@ -74,13 +71,12 @@ class MazeBuilder {
 
   inBounds(r, c) {
     if((typeof this.maze[r] == "undefined") || (typeof this.maze[r][c] == "undefined")) {
-      return false; /* out of bounds */
+      return false; /* fora dos limites */
     }
     return true;
   }
 
   shuffle(array) {
-    /* sauce: https://stackoverflow.com/a/12646864 */
     for(let i = array.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [array[i], array[j]] = [array[j], array[i]];
@@ -89,9 +85,6 @@ class MazeBuilder {
   }
 
   partition(r1, r2, c1, c2) {
-    /* create partition walls
-       ref: https://en.wikipedia.org/wiki/Maze_generation_algorithm#Recursive_division_method */
-
     let horiz, vert, x, y, start, end;
 
     if((r2 < r1) || (c2 < c1)) {
@@ -128,7 +121,7 @@ class MazeBuilder {
 
     let gaps = this.shuffle([true, true, true, false]);
 
-    /* create gaps in partition walls */
+    /* criando espaços entre as paredes das partições */
 
     if(gaps[0]) {
       let gapPosition = this.rand(c1, vert);
@@ -150,7 +143,7 @@ class MazeBuilder {
       this.maze[this.posToSpace(gapPosition)][this.posToWall(vert)] = [];
     }
 
-    /* recursively partition newly created chambers */
+    /* particiona recursivamente as novas câmeras criadas */
 
     this.partition(r1, horiz-1, c1, vert-1);
     this.partition(horiz+1, r2, c1, vert-1);
@@ -175,21 +168,21 @@ class MazeBuilder {
   countSteps(array, r, c, val, stop) {
 
     if(!this.inBounds(r, c)) {
-      return false; /* out of bounds */
+      return false; /* fora dos limites */
     }
 
     if(array[r][c] <= val) {
-      return false; /* shorter route already mapped */
+      return false; /* rota mais curta já foi mapeada */
     }
 
     if(!this.isGap([r, c])) {
-      return false; /* not traversable */
+      return false; /* não atravessável */
     }
 
     array[r][c] = val;
 
     if(this.maze[r][c].includes(stop)) {
-      return true; /* reached destination */
+      return true; /* chegou no destino */
     }
 
     this.countSteps(array, r-1, c, val+1, stop);
@@ -248,7 +241,7 @@ class MazeBuilder {
     this.parentDiv = document.getElementById(id);
 
     if(!this.parentDiv) {
-      alert("Cannot initialise maze - no element found with id \"" + id + "\"");
+      alert("Não pode ser iniciado, nenhum elemento encontrado com esse id:  \"" + id + "\"");
       return false;
     }
 

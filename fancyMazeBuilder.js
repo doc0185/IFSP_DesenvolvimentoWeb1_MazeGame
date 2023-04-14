@@ -1,13 +1,9 @@
 class FancyMazeBuilder extends MazeBuilder {
-
-  // Original JavaScript code by Chirp Internet: www.chirpinternet.eu
-  // Please acknowledge use of this code by including this header.
-
+  
   constructor(width, height) {
 
     super(width, height);
 
-    
     this.placeSentinels(100);
     this.placeKey();
 
@@ -25,7 +21,7 @@ class FancyMazeBuilder extends MazeBuilder {
   }
 
   
-  placeSentinels(percent = 100) {
+  placeSentinels(percent = 100) { /*inimigos do jogo */
 
     percent = parseInt(percent, 10);
 
