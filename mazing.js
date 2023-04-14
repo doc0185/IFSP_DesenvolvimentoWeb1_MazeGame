@@ -118,10 +118,10 @@ var Position = function(x, y) {
     mazeOutputDiv.appendChild(this.mazeScore);
     mazeOutputDiv.appendChild(this.mazeMessage);
     
-    clearInterval(INTERVALO)
+    clearInterval(INTERVALO);
     INTERVALO = setInterval(() => {
       milissegundos()
-    }, 10)
+    }, 10);
   
     mazeOutputDiv.style.width = this.mazeContainer.scrollWidth + "px";
     this.setMessage("Primeiro, ache a moeda!");
@@ -161,6 +161,7 @@ var Position = function(x, y) {
   
   Mazing.prototype.gameOver = function(text) {
     /* de-activate control keys */
+    clearInterval(INTERVALO);
     document.removeEventListener("keydown", this.keyPressHandler, false);
     this.setMessage(text);
     this.mazeContainer.classList.add("finished");
@@ -177,7 +178,7 @@ var Position = function(x, y) {
     this.mazeScore.classList.remove("has-key");
     this.maze[this.heroPos].classList.remove("door");
     this.heroScore += 50;
-    clearInterval(INTERVALO)
+    clearInterval(INTERVALO);
     this.endOfGame("GANHOU !!!");
   };
   
