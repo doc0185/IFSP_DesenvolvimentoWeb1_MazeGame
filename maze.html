@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="estilo.css">
+    <title>Maze</title>
+</head>
+<body>
+
+    <div id="titulo">
+    <span>Você poderá ganhar tesouros incríveis se desejar participar deste labirinto, mas isso também poderá custar sua vida! <br/><br/> Maior a dificuldade, maior o prêmio...</span>
+    <span><br/><br/></span>
+    <button class="button" onclick="facil()">Dificuldade Fácil</button>
+    <button class="button" onclick="medio()">Dificuldade Média</button>
+    <button class="button" onclick="dificil()">Dificuldade Difícil</button>
+    <span><br/><br/></span>
+    <audio controls id='audio'>
+        <source src="8bit Betty - Spooky Loop.mp3" type="audio/mp3">
+        Your browser does not support the audio element.
+      </audio>
+
+    </div>
+
+    <div id="maze_container"><!-- --></div>
+
+
+
+    <script src="mazeBuilder.js"></script>
+    <script src="fancyMazeBuilder.js"></script>
+    <script src="mazing.js"></script>
+    <script>
+    const button = document.querySelector('button');
+    var Maze, MazeGame;
+
+    const makeMaze = (id, width, height, speech = false) => {
+        Maze = new FancyMazeBuilder(width, height);
+        Maze.display(id);
+        MazeGame = new Mazing("maze");
+    };
+
+        function facil(){
+            makeMaze("maze_container", 12, 12);
+
+            audio.play();
+        }
+
+        function medio(){
+            makeMaze("maze_container", 15, 15);
+
+            audio.play();
+        }
+
+        function dificil(){
+            makeMaze("maze_container", 20, 20);
+
+            audio.play();
+        }
+    
+    </script>
+
+
+</body>
+</html>
