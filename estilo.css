@@ -107,6 +107,27 @@ body{
   z-index: 10;
 }
 
+#maze.won::after {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  content: "VOCÊ GANHOU!";
+  background: rgba(0,0,0,0.4);
+  text-align: center;
+  text-transform: uppercase;
+  font-family: monospace;
+  font-size: 5em;
+  
+  text-shadow: 2px 2px 2px rgba(0,0,0,0.8);
+  color: #fff;
+  z-index: 10;
+}
+
 #maze_output {
   display: flex;
   margin: 0.5em auto;
@@ -130,4 +151,5 @@ body{
 #maze_message {
   flex: 3;
   text-align: right;
+  font-size: 1em;
 }

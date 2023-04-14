@@ -27,7 +27,14 @@
       </audio>
 
     </div>
+    
+    <div id="titulo" class="cronometro">
+        <p class="tempo">
+            <span class="minutos">00</span>:<span class="segundos">00</span>:<span class="milissegundos">00</span>
+        </p>
 
+    </div>
+    
     <div id="maze_container"><!-- --></div>
 
 
@@ -43,6 +50,7 @@
         Maze = new FancyMazeBuilder(width, height);
         Maze.display(id);
         MazeGame = new Mazing("maze");
+        
     };
 
         function facil(){
